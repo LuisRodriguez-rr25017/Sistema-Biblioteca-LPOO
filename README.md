@@ -9,9 +9,9 @@ Funcionalidades Principales
 * Control de límites de libros y verificación de multas por vencimiento.
 
 Integrantes del Equipo
-1. 
+1. Luis Mario Rodriguez Ramirez - rr25017
 2. 
-3. 
+3. Michael Octavio Murillo Cabrera - mm23003
 
 Estado del Proyecto
 * [x]  Entrega 1: Demo en Pseudocódigo (PSeInt) y configuración inicial.
