@@ -10,7 +10,7 @@ Funcionalidades Principales
 
 Integrantes del Equipo
 1. Luis Mario Rodriguez Ramirez - rr25017
-2. 
+2. Jose Aristides Palacios Rodriguez - PR19058
 3. Michael Octavio Murillo Cabrera - mm23003
 
 Estado del Proyecto
