@@ -1,11 +1,4 @@
-
-import sqlite3
-import os
-
-
-def obtener_conexion():
-    ruta_db = os.path.join(os.path.dirname(os.path.abspath(__file__)), 'biblioteca.db')
-    return sqlite3.connect(ruta_db)
+from Conexion_db import obtener_conexion
 
 
 # =============================================
@@ -84,7 +77,7 @@ def menu_libros():
                     input("\nPresione ENTER para continuar...")
 
                 # =====================================
-                # BUSCAR LIBRO
+                # BUSCAR LIBRO (busqueda flexible)
                 # =====================================
                 case 3:
                     titulo_buscar = input("Ingrese el titulo del libro a buscar: ").strip()
@@ -93,21 +86,22 @@ def menu_libros():
                     cursor = conexion.cursor()
 
                     cursor.execute(
-                        "SELECT titulo, autor, estado FROM libros WHERE titulo = ?",
-                        (titulo_buscar,)
+                        "SELECT titulo, autor, estado FROM libros WHERE titulo LIKE ?",
+                        (f"%{titulo_buscar}%",)
                     )
 
-                    libro = cursor.fetchone()
-
+                    resultados = cursor.fetchall()
                     conexion.close()
 
-                    if libro:
-                        print("\nLibro encontrado!")
-                        print(f"Titulo: {libro[0]}")
-                        print(f"Autor: {libro[1]}")
-                        print(f"Estado: {libro[2]}")
+                    if resultados:
+                        print(f"\nSe encontraron {len(resultados)} resultado(s):")
+                        for libro in resultados:
+                            print(f"\nTitulo : {libro[0]}")
+                            print(f"Autor  : {libro[1]}")
+                            print(f"Estado : {libro[2]}")
+                            print("   -----------------------------------")
                     else:
-                        print(f"\nNo se encontro ningun libro con el titulo: {titulo_buscar}")
+                        print(f"\nNo se encontro ningun libro con el titulo: '{titulo_buscar}'")
 
                     input("\nPresione ENTER para continuar...")
 
