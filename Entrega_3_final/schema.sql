@@ -2,7 +2,7 @@
 CREATE TABLE socios (
     id SERIAL PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
-    telefono VARCHAR(20)
+    telefono VARCHAR(20),
     email VARCHAR(150) UNIQUE,
     multa_actual NUMERIC(10,2) DEFAULT 0
 );
@@ -13,7 +13,7 @@ CREATE TABLE libros (
     titulo VARCHAR(150) NOT NULL,
     autor VARCHAR(100) NOT NULL,
     portada_url TEXT,
-    disponible BOOLEAN DEFAULT TRUE
+    disponible BOOLEAN DEFAULT TRUE,
     fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
@@ -23,7 +23,7 @@ CREATE TABLE prestamos (
     libro_id INTEGER REFERENCES libros(id),
     socio_id INTEGER REFERENCES socios(id),
     fecha_prestamo DATE DEFAULT CURRENT_DATE,
-    devuelto BOOLEAN DEFAULT FALSE
+    devuelto BOOLEAN DEFAULT FALSE,
     fecha_devolucion DATE,
     fecha_limite DATE,
     multa_generada NUMERIC(10,2) DEFAULT 0
