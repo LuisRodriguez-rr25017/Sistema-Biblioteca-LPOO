@@ -97,6 +97,9 @@ def eliminar_libro(libro_id):
     if activos.data:
         return False, "No se puede eliminar: el libro tiene préstamos activos."
 
+    # Borrar historial de préstamos devueltos antes del libro (clave foránea)
+    supabase.table("prestamos").delete().eq("libro_id", libro_id).execute()
+
     respuesta = supabase.table("libros").delete().eq("id", libro_id).execute()
 
     if respuesta.data:

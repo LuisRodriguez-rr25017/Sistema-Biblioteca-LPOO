@@ -113,6 +113,9 @@ def eliminar_socio(socio_id):
     if activos.data:
         return False, "No se puede eliminar: el socio tiene prestamos activos."
 
+    # Borrar historial de préstamos devueltos antes del socio (clave foránea)
+    supabase.table("prestamos").delete().eq("socio_id", socio_id).execute()
+
     supabase.table("socios").delete().eq("id", socio_id).execute()
     return True, "Socio eliminado exitosamente."
 
