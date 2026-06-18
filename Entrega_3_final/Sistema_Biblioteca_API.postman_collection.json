@@ -1,0 +1,487 @@
+{
+	"info": {
+		"_postman_id": "biblioteca-lpoo-entrega3",
+		"name": "Sistema Biblioteca API",
+		"description": "Colección Postman para la API REST del Sistema de Biblioteca (Entrega 3).\n\nRequisitos:\n1. Ejecutar la API: `py -m uvicorn main:app --reload`\n2. Configurar la variable `base_url` (por defecto: http://127.0.0.1:8000)\n3. Tener Supabase configurado en el archivo `.env`\n\nFlujo sugerido de prueba:\n1. Health Check\n2. Crear Socio → Crear Libro\n3. Registrar Préstamo\n4. Listar Préstamos Activos\n5. Devolver Préstamo\n6. Pagar Multa (si aplica)",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"variable": [
+		{
+			"key": "base_url",
+			"value": "http://127.0.0.1:8000",
+			"type": "string"
+		},
+		{
+			"key": "libro_id",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "socio_id",
+			"value": "1",
+			"type": "string"
+		},
+		{
+			"key": "prestamo_id",
+			"value": "1",
+			"type": "string"
+		}
+	],
+	"item": [
+		{
+			"name": "Sistema",
+			"item": [
+				{
+					"name": "Raíz — Info API",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/",
+							"host": ["{{base_url}}"],
+							"path": [""]
+						},
+						"description": "Información general de la API y estado de conexión a Supabase."
+					},
+					"response": []
+				},
+				{
+					"name": "Health Check",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/health",
+							"host": ["{{base_url}}"],
+							"path": ["health"]
+						},
+						"description": "Verifica que la API y Supabase estén disponibles. Responde 503 si no hay conexión."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Libros",
+			"item": [
+				{
+					"name": "Listar Libros",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/libros",
+							"host": ["{{base_url}}"],
+							"path": ["api", "libros"]
+						},
+						"description": "Obtiene todos los libros registrados."
+					},
+					"response": []
+				},
+				{
+					"name": "Buscar Libros por Título",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/libros/buscar?q=soledad",
+							"host": ["{{base_url}}"],
+							"path": ["api", "libros", "buscar"],
+							"query": [
+								{
+									"key": "q",
+									"value": "soledad",
+									"description": "Texto a buscar (búsqueda parcial, case-insensitive)"
+								}
+							]
+						},
+						"description": "Búsqueda flexible por título (ilike %q%)."
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Libro por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/libros/{{libro_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "libros", "{{libro_id}}"]
+						},
+						"description": "Obtiene un libro específico por su ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Libro",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    const json = pm.response.json();",
+									"    pm.collectionVariables.set('libro_id', json.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"titulo\": \"Cien años de soledad\",\n  \"autor\": \"Gabriel García Márquez\",\n  \"portada_url\": \"https://ejemplo.com/portada.jpg\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/libros",
+							"host": ["{{base_url}}"],
+							"path": ["api", "libros"]
+						},
+						"description": "Registra un nuevo libro. `portada_url` es opcional."
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Libro",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"titulo\": \"Cien años de soledad (Edición especial)\",\n  \"autor\": \"Gabriel García Márquez\",\n  \"portada_url\": \"https://ejemplo.com/portada-nueva.jpg\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/libros/{{libro_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "libros", "{{libro_id}}"]
+						},
+						"description": "Actualiza título, autor y portada de un libro existente."
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Libro",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/libros/{{libro_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "libros", "{{libro_id}}"]
+						},
+						"description": "Elimina un libro. Falla con 400 si tiene préstamos activos."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Socios",
+			"item": [
+				{
+					"name": "Listar Socios",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/socios",
+							"host": ["{{base_url}}"],
+							"path": ["api", "socios"]
+						},
+						"description": "Obtiene todos los socios registrados."
+					},
+					"response": []
+				},
+				{
+					"name": "Listar Socios con Multa",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/socios/multas",
+							"host": ["{{base_url}}"],
+							"path": ["api", "socios", "multas"]
+						},
+						"description": "Filtra socios con multa_actual > 0."
+					},
+					"response": []
+				},
+				{
+					"name": "Obtener Socio por ID",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/socios/{{socio_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "socios", "{{socio_id}}"]
+						},
+						"description": "Obtiene un socio específico por su ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Crear Socio",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 201) {",
+									"    const json = pm.response.json();",
+									"    pm.collectionVariables.set('socio_id', json.id);",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombre\": \"Juan Pérez\",\n  \"telefono\": \"5555-1234\",\n  \"email\": \"juan.perez@email.com\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/socios",
+							"host": ["{{base_url}}"],
+							"path": ["api", "socios"]
+						},
+						"description": "Registra un nuevo socio. `telefono` y `email` son opcionales."
+					},
+					"response": []
+				},
+				{
+					"name": "Actualizar Socio",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"nombre\": \"Juan Pérez García\",\n  \"telefono\": \"5555-9999\",\n  \"email\": \"juan.garcia@email.com\"\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/socios/{{socio_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "socios", "{{socio_id}}"]
+						},
+						"description": "Actualiza nombre, teléfono y email de un socio."
+					},
+					"response": []
+				},
+				{
+					"name": "Eliminar Socio",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/socios/{{socio_id}}",
+							"host": ["{{base_url}}"],
+							"path": ["api", "socios", "{{socio_id}}"]
+						},
+						"description": "Elimina un socio. Falla si tiene multa pendiente o préstamos activos."
+					},
+					"response": []
+				},
+				{
+					"name": "Pagar Multa — Total",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"monto\": 0,\n  \"pago_total\": true\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/socios/{{socio_id}}/pagar-multa",
+							"host": ["{{base_url}}"],
+							"path": ["api", "socios", "{{socio_id}}", "pagar-multa"]
+						},
+						"description": "Saldar toda la multa pendiente del socio."
+					},
+					"response": []
+				},
+				{
+					"name": "Pagar Multa — Parcial",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"monto\": 10.00,\n  \"pago_total\": false\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/socios/{{socio_id}}/pagar-multa",
+							"host": ["{{base_url}}"],
+							"path": ["api", "socios", "{{socio_id}}", "pagar-multa"]
+						},
+						"description": "Registrar un pago parcial de la multa."
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Préstamos",
+			"item": [
+				{
+					"name": "Listar Préstamos Activos",
+					"event": [
+						{
+							"listen": "test",
+							"script": {
+								"exec": [
+									"if (pm.response.code === 200) {",
+									"    const json = pm.response.json();",
+									"    if (json.length > 0) {",
+									"        pm.collectionVariables.set('prestamo_id', json[0].id);",
+									"    }",
+									"}"
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{base_url}}/api/prestamos/activos",
+							"host": ["{{base_url}}"],
+							"path": ["api", "prestamos", "activos"]
+						},
+						"description": "Lista todos los préstamos con devuelto = false, incluyendo datos de socio y libro."
+					},
+					"response": []
+				},
+				{
+					"name": "Registrar Préstamo",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"socio_id\": {{socio_id}},\n  \"libro_id\": {{libro_id}}\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/prestamos",
+							"host": ["{{base_url}}"],
+							"path": ["api", "prestamos"]
+						},
+						"description": "Registra un préstamo. El socio no debe tener multa pendiente y el libro debe estar disponible."
+					},
+					"response": []
+				},
+				{
+					"name": "Devolver Préstamo — A Tiempo",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"a_tiempo\": true,\n  \"dias_atraso\": 0,\n  \"pagar_multa_ahora\": false\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/prestamos/{{prestamo_id}}/devolver",
+							"host": ["{{base_url}}"],
+							"path": ["api", "prestamos", "{{prestamo_id}}", "devolver"]
+						},
+						"description": "Devolución dentro del plazo de 14 días. Sin multa."
+					},
+					"response": []
+				},
+				{
+					"name": "Devolver Préstamo — Con Atraso y Multa",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"a_tiempo\": false,\n  \"dias_atraso\": 5,\n  \"pagar_multa_ahora\": false\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/prestamos/{{prestamo_id}}/devolver",
+							"host": ["{{base_url}}"],
+							"path": ["api", "prestamos", "{{prestamo_id}}", "devolver"]
+						},
+						"description": "Devolución con atraso. Multa = dias_atraso × $2. La multa queda pendiente de pago."
+					},
+					"response": []
+				},
+				{
+					"name": "Devolver Préstamo — Con Atraso y Pago Inmediato",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n  \"a_tiempo\": false,\n  \"dias_atraso\": 3,\n  \"pagar_multa_ahora\": true\n}"
+						},
+						"url": {
+							"raw": "{{base_url}}/api/prestamos/{{prestamo_id}}/devolver",
+							"host": ["{{base_url}}"],
+							"path": ["api", "prestamos", "{{prestamo_id}}", "devolver"]
+						},
+						"description": "Devolución con atraso y pago de multa en el mismo momento."
+					},
+					"response": []
+				}
+			]
+		}
+	]
+}
