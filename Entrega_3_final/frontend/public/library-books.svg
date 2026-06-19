@@ -1,0 +1,22 @@
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Libro inferior (azul) - acostado -->
+  <rect x="26" y="92" width="76" height="16" rx="3" fill="#4A90D9"/>
+  <rect x="26" y="92" width="8" height="16" fill="#3A72AE"/>
+  <rect x="40" y="98" width="50" height="3" rx="1.5" fill="#7FB3E8"/>
+
+  <!-- Libro medio (rojo) - acostado, ligeramente desplazado -->
+  <rect x="32" y="74" width="70" height="16" rx="3" fill="#E05A4E"/>
+  <rect x="94" y="74" width="8" height="16" fill="#B8443A"/>
+  <rect x="42" y="80" width="46" height="3" rx="1.5" fill="#F0938A"/>
+
+  <!-- Libro superior (verde) - acostado -->
+  <rect x="28" y="56" width="68" height="16" rx="3" fill="#5CB85C"/>
+  <rect x="28" y="56" width="8" height="16" fill="#479147"/>
+  <rect x="42" y="62" width="44" height="3" rx="1.5" fill="#8FD68F"/>
+
+  <!-- Libro vertical (amarillo) - parado al lado -->
+  <rect x="84" y="38" width="16" height="50" rx="3" fill="#F5C242"/>
+  <rect x="84" y="38" width="16" height="8" rx="3" fill="#D9A521"/>
+  <rect x="88" y="52" width="8" height="3" rx="1.5" fill="#FBDD8C"/>
+  <rect x="88" y="60" width="8" height="3" rx="1.5" fill="#FBDD8C"/>
+</svg>

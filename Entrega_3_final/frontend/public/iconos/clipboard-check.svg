@@ -1,0 +1,18 @@
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Tapa superior del clip -->
+  <rect x="48" y="20" width="32" height="14" rx="4" fill="#B8C5CC"/>
+  <circle cx="64" cy="22" r="5" fill="#8A9BA5" stroke="#B8C5CC" stroke-width="3"/>
+
+  <!-- Cuerpo del portapapeles -->
+  <rect x="34" y="28" width="60" height="76" rx="8" fill="#E8EEF1"/>
+  <rect x="34" y="28" width="60" height="76" rx="8" fill="none" stroke="#0F1115" stroke-width="0"/>
+
+  <!-- Barra superior interior -->
+  <rect x="44" y="30" width="40" height="8" rx="4" fill="#B8C5CC"/>
+
+  <!-- Círculo verde -->
+  <circle cx="64" cy="74" r="20" fill="#A8E0A0"/>
+
+  <!-- Check -->
+  <path d="M55 74 L61 80 L73 67" stroke="#2E5A2A" stroke-width="5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+</svg>
