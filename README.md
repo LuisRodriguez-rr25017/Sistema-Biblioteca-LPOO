@@ -16,7 +16,7 @@ Integrantes del Equipo
 Estado del Proyecto
 * [x]  Entrega 1: Demo en Pseudocódigo (PSeInt) y configuración inicial.
 * [x] Entrega 2: Demo de avance de código.
-* [ ] Entrega 3: Funcionalidad completa y pruebas unitarias.
+* [x] Entrega 3: Funcionalidad completa y pruebas unitarias.
 
 ## Cómo ejecutar
 
