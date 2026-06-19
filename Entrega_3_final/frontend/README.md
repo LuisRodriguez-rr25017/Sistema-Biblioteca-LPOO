@@ -1,70 +1,76 @@
-# Getting Started with Create React App
+# Sistema de Biblioteca — Entrega 3
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Sistema web de gestión de biblioteca con backend en FastAPI, base de datos en Supabase y frontend en React + Tailwind CSS.
 
-## Available Scripts
+---
 
-In the project directory, you can run:
+## Lo que necesitas instalar antes
 
-### `npm start`
+- Python 3.10 o superior
+- Node.js (cualquier versión reciente)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+---
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+## Paso 1 — Bajar el proyecto
 
-### `npm test`
+```bash
+git clone https://github.com/LuisRodriguez-rr25017/Sistema-Biblioteca-LPOO.git
+cd Sistema-Biblioteca-LPOO
+```
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+---
 
-### `npm run build`
+## Paso 2 — Configurar el backend
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Entra a la carpeta:
+```bash
+cd Entrega_3_final
+```
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Instala las dependencias de Python:
+```bash
+pip install fastapi uvicorn supabase python-dotenv
+```
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Crea un archivo llamado `.env` en esa misma carpeta con este contenido:
 
-### `npm run eject`
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+SUPABASE_URL=https://lhhyypagxirtfztjuhop.supabase.co
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+SUPABASE_KEY=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImxoaHl5cGFneGlydGZ6dGp1aG9wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODA4NzI1NjAsImV4cCI6MjA5NjQ0ODU2MH0.Vkvo3yLajzkWBUdlDoFP9tME9RfnKGVerIdY1n7dfH0
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
 
-## Learn More
+Arranca el backend:
+```bash
+py -m uvicorn main:app --reload
+```
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Debe aparecer: `Uvicorn running on http://127.0.0.1:8000`
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+---
 
-### Code Splitting
+## Paso 3 — Configurar el frontend
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+Abre **otra terminal** y entra a la carpeta del frontend:
+```bash
+cd Entrega_3_final/frontend
+```
 
-### Analyzing the Bundle Size
+Instala las dependencias de React:
+```bash
+npm install
+```
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Arranca el frontend:
+```bash
+npm start
+```
 
-### Making a Progressive Web App
+Se abre automáticamente en el navegador en `http://localhost:3000`
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+---
 
-### Advanced Configuration
+## Nota importante
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Las dos terminales deben estar corriendo al mismo tiempo. Si cierras una el sistema deja de funcionar.
