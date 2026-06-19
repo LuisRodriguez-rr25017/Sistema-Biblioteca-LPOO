@@ -1,0 +1,8 @@
+<svg width="128" height="128" viewBox="0 0 128 128" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Triángulo -->
+  <path d="M64 22 L114 104 Q117 110 110 110 L18 110 Q11 110 14 104 Z" fill="#F5B921" stroke="#F5B921" stroke-width="2" stroke-linejoin="round"/>
+
+  <!-- Signo de exclamación -->
+  <rect x="59" y="52" width="10" height="30" rx="5" fill="#1A1A1A"/>
+  <circle cx="64" cy="95" r="6" fill="#1A1A1A"/>
+</svg>
