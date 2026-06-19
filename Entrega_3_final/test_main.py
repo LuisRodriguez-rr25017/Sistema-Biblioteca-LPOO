@@ -1,5 +1,5 @@
 from fastapi.testclient import TestClient
-from main import app  # Importamos tu API real
+from main import app 
 
 # Creamos un cliente falso que simula ser un navegador web
 cliente = TestClient(app)
