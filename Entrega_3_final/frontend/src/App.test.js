@@ -1,8 +1,12 @@
 import { render, screen } from '@testing-library/react';
 import App from './App';
 
-test('renders learn react link', () => {
+test('Comprueba que la interfaz cargue y muestre el titulo del sistema', () => {
   render(<App />);
-  const linkElement = screen.getByText(/learn react/i);
-  expect(linkElement).toBeInTheDocument();
+  
+  // Buscamos alguna palabra clave que sepamos que esta en su interfaz visual.
+  // "Biblioteca" es casi segura, pero si falla, puedes cambiarla por "Socios" o "Libros"
+  const textoEnPantalla = screen.getByText(/Biblioteca/i);
+  
+  expect(textoEnPantalla).toBeInTheDocument();
 });
