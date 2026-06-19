@@ -20,8 +20,8 @@ CREATE TABLE libros (
 -- 3. Creamos la tabla relacional de préstamos
 CREATE TABLE prestamos (
     id SERIAL PRIMARY KEY,
-    libro_id INTEGER REFERENCES libros(id),
-    socio_id INTEGER REFERENCES socios(id),
+    libro_id INTEGER REFERENCES libros(id) ON DELETE CASCADE,
+    socio_id INTEGER REFERENCES socios(id) ON DELETE CASCADE,
     fecha_prestamo DATE DEFAULT CURRENT_DATE,
     devuelto BOOLEAN DEFAULT FALSE,
     fecha_devolucion DATE,
